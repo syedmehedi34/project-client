@@ -118,21 +118,22 @@ const Navbar = () => {
                       {user?.displayName}
                     </p>
                     <small>{user?.email}</small>
+
+                    <button
+                      onClick={() => {
+                        logOut();
+                        toast.success("Logged out successfully!", {
+                          position: "top-left",
+                          autoClose: 2000,
+                          pauseOnHover: true,
+                        });
+                      }}
+                      className="btn btn-neutral w-full mt-3"
+                    >
+                      Log Out
+                    </button>
                   </div>
                 )}
-                <button
-                  onClick={() => {
-                    logOut();
-                    toast.success("Logged out successfully!", {
-                      position: "top-left",
-                      autoClose: 2000,
-                      pauseOnHover: true,
-                    });
-                  }}
-                  className="btn btn-neutral"
-                >
-                  Log Out
-                </button>
               </div>
             ) : (
               <div className="flex items-center gap-1">
