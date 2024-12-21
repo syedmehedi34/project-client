@@ -4,6 +4,7 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../providers/AuthProvider";
+import axios from "axios";
 
 const Login = () => {
   const { signInUser, signInWithGoogle, setUser, setLoginMail, setLoading } =
@@ -32,6 +33,7 @@ const Login = () => {
           autoClose: 1500,
           pauseOnHover: true,
         }); // Success toast
+
         navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {

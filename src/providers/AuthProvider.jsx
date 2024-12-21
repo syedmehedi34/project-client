@@ -13,6 +13,7 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.init";
+import axios from "axios";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
@@ -82,7 +83,29 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
+
+      //------------------------
+      console.log("State Captured -> ", currentUser?.email);
+      if (currentUser?.email) {
+        // setLoginMail(currentUser.email);
+        const user = { email: currentUser.email };
+
+        axios
+          .post("http://localhost:5001/jwt", user, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            console.log("login token", res.data);
+            setLoading(false);
+          });
+      } else {
+        axios
+          .post("http://localhost:5001/logout", {}, { withCredentials: true })
+          .then((res) => {
+            console.log("logout data : ", res.data);
+            setLoading(false);
+          });
+      }
     });
     return () => {
       unsubscribe();
